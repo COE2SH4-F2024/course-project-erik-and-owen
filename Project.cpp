@@ -15,9 +15,6 @@ Player *player;
 
 char board[NUM_ROWS][NUM_COlUMNS];
 
-bool exitFlag;
-char input;
-
 void Initialize(void);
 void GetInput(void);
 void RunLogic(void);
@@ -32,7 +29,8 @@ int main(void)
 
     Initialize();
 
-    while(exitFlag == false)  
+    // while(exitFlag == false)  
+    while (!gameMechs.getExitFlagStatus())
     {
         GetInput();
         RunLogic();
@@ -51,35 +49,37 @@ void Initialize(void)
     MacUILib_clearScreen();
 
     player = new Player(&gameMechs);
-
-    exitFlag = false;
 }
 
 void GetInput(void)
 {
     if (MacUILib_hasChar()) {
-        input = MacUILib_getChar();
+        gameMechs.setInput(MacUILib_getChar());
     }
    
 }
 
 void RunLogic(void)
 {
-    switch(input) {
-        case ' ':
-            exitFlag = true;
-            break;
+    if (gameMechs.getInput() != 0) {
+        switch(gameMechs.getInput()) {
+            case ' ':
+            gameMechs.setExitTrue();
+                break;
+        }
     }
-    
+
+    player->updatePlayerDir();
+    player->movePlayer();
 }
 
 void DrawScreen(void)
 {
     MacUILib_clearScreen();    
 
-    for (int i = 0; i < NUM_ROWS; i++) {
-        for (int j = 0; j < NUM_COlUMNS; j++) {
-            if (i == 0 || i == NUM_ROWS - 1 || j == 0 || j == NUM_COlUMNS - 1) {
+    for (int i = 0; i < gameMechs.getBoardSizeY(); i++) {
+        for (int j = 0; j < gameMechs.getBoardSizeX(); j++) {
+            if (i == 0 || i == gameMechs.getBoardSizeY() - 1 || j == 0 || j == gameMechs.getBoardSizeX() - 1) {
                 board[i][j] = '#';
             } else if (i == player->getPlayerPos().pos->y && j == player->getPlayerPos().pos->x) {
                 board[i][j] = player->getPlayerPos().symbol;
