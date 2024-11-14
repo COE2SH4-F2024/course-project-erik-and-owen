@@ -99,8 +99,7 @@ char** GameMechs::getBoard() {
     return board;
 }
 
-string GameMechs::loseMessage(int messageNum) {
-    string message;
+void GameMechs::setLoseMessage(int messageNum) {
 
     switch (messageNum) {
         case 1:
@@ -113,6 +112,8 @@ string GameMechs::loseMessage(int messageNum) {
             message = "Message 3";
             break;
     }
+}
 
+string GameMechs::getLoseMessage() {
     return message;
 }
