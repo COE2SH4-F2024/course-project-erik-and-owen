@@ -1,12 +1,17 @@
 #include <iostream>
 #include "MacUILib.h"
 #include "objPos.h"
+#include "GameMechs.h"
+#include "Player.h"
 
 using namespace std;
 
 #define DELAY_CONST 100000
 #define NUM_ROWS 10
 #define NUM_COlUMNS 20
+
+GameMechs gameMechs;
+Player *player;
 
 char board[NUM_ROWS][NUM_COlUMNS];
 
@@ -45,6 +50,8 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
+    player = new Player(&gameMechs);
+
     exitFlag = false;
 }
 
@@ -74,6 +81,8 @@ void DrawScreen(void)
         for (int j = 0; j < NUM_COlUMNS; j++) {
             if (i == 0 || i == NUM_ROWS - 1 || j == 0 || j == NUM_COlUMNS - 1) {
                 board[i][j] = '#';
+            } else if (i == player->getPlayerPos().pos->y && j == player->getPlayerPos().pos->x) {
+                board[i][j] = player->getPlayerPos().symbol;
             } else {
                 board[i][j] = ' ';
             }
