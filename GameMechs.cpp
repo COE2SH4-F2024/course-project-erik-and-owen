@@ -3,6 +3,8 @@
 GameMechs::GameMechs()
 {
     exitFlag = false;
+    loseFlag = false;
+    score = 0;
     boardSizeX = 30;
     boardSizeY = 15;
     
@@ -11,6 +13,8 @@ GameMechs::GameMechs()
 GameMechs::GameMechs(int boardX, int boardY)
 {
     exitFlag = false;
+    loseFlag = false;
+    score = 0;
     boardSizeX = boardX;
     boardSizeY = boardY;
     
@@ -33,7 +37,7 @@ bool GameMechs::getExitFlagStatus() const
 
 bool GameMechs::getLoseFlagStatus() const
 {
-
+    return loseFlag;
 }
     
 
@@ -44,12 +48,12 @@ char GameMechs::getInput() const
 
 int GameMechs::getScore() const
 {
-
+    return score;
 }
 
 void GameMechs::incrementScore()
 {
-    
+    score++;
 }
 
 int GameMechs::getBoardSizeX() const
@@ -62,6 +66,28 @@ int GameMechs::getBoardSizeY() const
     return boardSizeY;
 }
 
+
+void GameMechs::setExitTrue()
+{
+    exitFlag = true;
+}
+
+void GameMechs::setLoseFlag()
+{
+   loseFlag = true; 
+}
+
+void GameMechs::setInput(char this_input)
+{
+    input = this_input;
+}
+
+void GameMechs::clearInput()
+{
+    input = 0;
+}
+
+// More methods should be added here
 void GameMechs::createBoard() {
     board = new char*[boardSizeY];
     for(int i = 0; i < boardSizeY; i++) {
@@ -73,26 +99,20 @@ char** GameMechs::getBoard() {
     return board;
 }
 
+string GameMechs::loseMessage(int messageNum) {
+    string message;
 
-void GameMechs::setExitTrue()
-{
-    exitFlag = true;
+    switch (messageNum) {
+        case 1:
+            message = "Message 1";
+            break;
+        case 2:
+            message = "Message 2";
+            break;
+        case 3:
+            message = "Message 3";
+            break;
+    }
+
+    return message;
 }
-
-void GameMechs::setLoseFlag()
-{
-    
-}
-
-void GameMechs::setInput(char this_input)
-{
-    input = this_input;
-
-}
-
-void GameMechs::clearInput()
-{
-    input = 0;
-}
-
-// More methods should be added here

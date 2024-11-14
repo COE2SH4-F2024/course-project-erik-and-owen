@@ -3,6 +3,7 @@
 
 #include <cstdlib>
 #include <time.h>
+#include <string>
 
 #include "objPos.h"
 #include "objPosArrayList.h"
@@ -39,13 +40,14 @@ class GameMechs
 
         int getBoardSizeX() const;
         int getBoardSizeY() const;
-        void createBoard();
-        char** getBoard();
         
         int getScore() const;
         void incrementScore();
         
         // More methods should be added here
+        void createBoard();
+        char** getBoard();
+        string loseMessage(int messageNum);
 };
 
 #endif

@@ -11,6 +11,8 @@ using namespace std;
 GameMechs *gameMechs;
 Player *player;
 
+string DEBUG_MESSAGE;
+
 void Initialize(void);
 void GetInput(void);
 void RunLogic(void);
@@ -63,7 +65,22 @@ void RunLogic(void)
     if (gameMechs->getInput() != 0) {
         switch(gameMechs->getInput()) {
             case ' ':
-            gameMechs->setExitTrue();
+                gameMechs->setExitTrue();
+                break;
+            case 'l':
+                gameMechs->incrementScore();
+                break;
+            case '1':
+                gameMechs->setLoseFlag();
+                DEBUG_MESSAGE = gameMechs->loseMessage(1);
+                break;
+            case '2':
+                gameMechs->setLoseFlag();
+                DEBUG_MESSAGE = gameMechs->loseMessage(2);
+                break;
+            case '3':
+                gameMechs->setLoseFlag();
+                DEBUG_MESSAGE = gameMechs->loseMessage(3);
                 break;
         }
     }
@@ -90,6 +107,11 @@ void DrawScreen(void)
         }
 
         MacUILib_printf("\n");
+    }
+
+    MacUILib_printf("Score %d\n", gameMechs->getScore());
+    if(gameMechs->getLoseFlagStatus()) {
+        MacUILib_printf("%s\n", DEBUG_MESSAGE.c_str());
     }
 }
 
