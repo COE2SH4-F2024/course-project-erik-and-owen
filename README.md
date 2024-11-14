@@ -13,5 +13,3 @@ Member 1 StudentID: [400500424]
 
 Member 2 MacID: [loho]
 Member 2 StudentID: [400523495]
-
-Testing
