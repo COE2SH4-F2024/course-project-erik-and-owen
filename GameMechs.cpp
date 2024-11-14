@@ -20,7 +20,8 @@ GameMechs::GameMechs(int boardX, int boardY)
     
 }
 
-// do you need a destructor?
+// do you need a destructor? 
+// We do because we made the game board a double pointer array that needs to be deleted
 GameMechs::~GameMechs()
 {
     for(int i = 0; i < boardSizeY; i++) {
