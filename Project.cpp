@@ -7,13 +7,9 @@
 using namespace std;
 
 #define DELAY_CONST 100000
-#define NUM_ROWS 10
-#define NUM_COlUMNS 20
 
-GameMechs gameMechs;
+GameMechs *gameMechs;
 Player *player;
-
-char board[NUM_ROWS][NUM_COlUMNS];
 
 void Initialize(void);
 void GetInput(void);
@@ -30,7 +26,7 @@ int main(void)
     Initialize();
 
     // while(exitFlag == false)  
-    while (!gameMechs.getExitFlagStatus())
+    while (!gameMechs->getExitFlagStatus())
     {
         GetInput();
         RunLogic();
@@ -48,23 +44,26 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    player = new Player(&gameMechs);
+    gameMechs = new GameMechs(30, 15);
+    player = new Player(gameMechs);
+
+    gameMechs->createBoard();
 }
 
 void GetInput(void)
 {
     if (MacUILib_hasChar()) {
-        gameMechs.setInput(MacUILib_getChar());
+        gameMechs->setInput(MacUILib_getChar());
     }
    
 }
 
 void RunLogic(void)
 {
-    if (gameMechs.getInput() != 0) {
-        switch(gameMechs.getInput()) {
+    if (gameMechs->getInput() != 0) {
+        switch(gameMechs->getInput()) {
             case ' ':
-            gameMechs.setExitTrue();
+            gameMechs->setExitTrue();
                 break;
         }
     }
@@ -77,17 +76,17 @@ void DrawScreen(void)
 {
     MacUILib_clearScreen();    
 
-    for (int i = 0; i < gameMechs.getBoardSizeY(); i++) {
-        for (int j = 0; j < gameMechs.getBoardSizeX(); j++) {
-            if (i == 0 || i == gameMechs.getBoardSizeY() - 1 || j == 0 || j == gameMechs.getBoardSizeX() - 1) {
-                board[i][j] = '#';
+    for (int i = 0; i < gameMechs->getBoardSizeY(); i++) {
+        for (int j = 0; j < gameMechs->getBoardSizeX(); j++) {
+            if (i == 0 || i == gameMechs->getBoardSizeY() - 1 || j == 0 || j == gameMechs->getBoardSizeX() - 1) {
+                gameMechs->getBoard()[i][j] = '#';
             } else if (i == player->getPlayerPos().pos->y && j == player->getPlayerPos().pos->x) {
-                board[i][j] = player->getPlayerPos().symbol;
+                gameMechs->getBoard()[i][j] = player->getPlayerPos().symbol;
             } else {
-                board[i][j] = ' ';
+                gameMechs->getBoard()[i][j] = ' ';
             }
 
-            MacUILib_printf("%c", board[i][j]);
+            MacUILib_printf("%c", gameMechs->getBoard()[i][j]);
         }
 
         MacUILib_printf("\n");

@@ -3,19 +3,26 @@
 GameMechs::GameMechs()
 {
     exitFlag = false;
-    boardSizeX = 20;
-    boardSizeY = 10;
+    boardSizeX = 30;
+    boardSizeY = 15;
     
 }
 
 GameMechs::GameMechs(int boardX, int boardY)
 {
+    exitFlag = false;
+    boardSizeX = boardX;
+    boardSizeY = boardY;
     
 }
 
 // do you need a destructor?
 GameMechs::~GameMechs()
 {
+    for(int i = 0; i < boardSizeY; i++) {
+        delete[] board[i];
+    }
+    delete[] board;
     
 }
 
@@ -53,6 +60,17 @@ int GameMechs::getBoardSizeX() const
 int GameMechs::getBoardSizeY() const
 {
     return boardSizeY;
+}
+
+void GameMechs::createBoard() {
+    board = new char*[boardSizeY];
+    for(int i = 0; i < boardSizeY; i++) {
+        board[i] = new char[boardSizeX];
+    }
+}
+
+char** GameMechs::getBoard() {
+    return board;
 }
 
 

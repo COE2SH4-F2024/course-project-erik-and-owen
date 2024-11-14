@@ -17,6 +17,7 @@ class GameMechs
         bool loseFlag;
         int score;
 
+        char** board;
         int boardSizeX;
         int boardSizeY;
 
@@ -38,6 +39,8 @@ class GameMechs
 
         int getBoardSizeX() const;
         int getBoardSizeY() const;
+        void createBoard();
+        char** getBoard();
         
         int getScore() const;
         void incrementScore();
