@@ -89,7 +89,7 @@ void GameMechs::clearInput()
 }
 
 // More methods should be added here
-void GameMechs::createBoard() {
+void GameMechs::createBoard() { // Creates the board as a 2D array of pointers on the heap
     board = new char*[boardSizeY];
     for(int i = 0; i < boardSizeY; i++) {
         board[i] = new char[boardSizeX];
@@ -100,7 +100,7 @@ char** GameMechs::getBoard() {
     return board;
 }
 
-void GameMechs::setLoseMessage(int messageNum) {
+void GameMechs::setLoseMessage(int messageNum) { // Pass an integer corresponding to the desired message
 
     switch (messageNum) {
         case 1:
@@ -116,5 +116,5 @@ void GameMechs::setLoseMessage(int messageNum) {
 }
 
 string GameMechs::getLoseMessage() {
-    return message;
+    return message; // Message stores whichever string the user set the message to with setLoseMessage()
 }

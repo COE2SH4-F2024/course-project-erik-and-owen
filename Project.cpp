@@ -25,8 +25,7 @@ int main(void)
 
     Initialize();
 
-    // while(exitFlag == false)  
-    while (!gameMechs->getExitFlagStatus())
+    while (!gameMechs->getExitFlagStatus()) // While the player has not lost so loseFlag is false
     {
         GetInput();
         RunLogic();
@@ -44,23 +43,23 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    gameMechs = new GameMechs(30, 15);
+    gameMechs = new GameMechs(30, 15); // Instantiate with board dimensions
     player = new Player(gameMechs);
 
-    gameMechs->createBoard();
+    gameMechs->createBoard(); // Function that creates the board on the heap
 }
 
 void GetInput(void)
 {
     if (MacUILib_hasChar()) {
-        gameMechs->setInput(MacUILib_getChar());
+        gameMechs->setInput(MacUILib_getChar()); // Get user input if there is some
     }
    
 }
 
 void RunLogic(void)
 {
-    if (gameMechs->getInput() != 0) {
+    if (gameMechs->getInput() != 0) { // Debugging buttons
         switch(gameMechs->getInput()) {
             case ' ':
                 gameMechs->setExitTrue();
@@ -94,18 +93,18 @@ void DrawScreen(void)
     for (int i = 0; i < gameMechs->getBoardSizeY(); i++) {
         for (int j = 0; j < gameMechs->getBoardSizeX(); j++) {
             if (i == 0 || i == gameMechs->getBoardSizeY() - 1 || j == 0 || j == gameMechs->getBoardSizeX() - 1) {
-                gameMechs->getBoard()[i][j] = '#';
+                gameMechs->getBoard()[i][j] = '#'; // Set symbol to # if i is the top or bottom, or if j is the left or right of the board
             } else {
-                gameMechs->getBoard()[i][j] = ' ';
+                gameMechs->getBoard()[i][j] = ' '; // Default board symbol to a space
             }
 
-            for (int k = 0; k < player->getPlayerPos()->getSize(); k++) {
+            for (int k = 0; k < player->getPlayerPos()->getSize(); k++) { // Loop through each body segment in the array list
                 if(i == player->getPlayerPos()->getElement(k).pos->y && j == player->getPlayerPos()->getElement(k).pos->x) {
-                    gameMechs->getBoard()[i][j] = player->getPlayerPos()->getElement(k).symbol;
+                    gameMechs->getBoard()[i][j] = player->getPlayerPos()->getElement(k).symbol; // If the board coordinates are the same as a the current body segments coordinates, set that position to the player symbol
                 }
             }
 
-            MacUILib_printf("%c", gameMechs->getBoard()[i][j]);
+            MacUILib_printf("%c", gameMechs->getBoard()[i][j]); // Print whatever the symbol determined above is
         }
 
         MacUILib_printf("\n");

@@ -41,12 +41,6 @@ Player::~Player()
     }
 }
 
-// objPos Player::getPlayerPos() const
-// {
-    // return the reference to the playerPos arrray list
-    // return playerPos;
-// }
-
 objPosArrayList* Player::getPlayerPos() const {
     return playerPosList;
 }
@@ -54,10 +48,10 @@ objPosArrayList* Player::getPlayerPos() const {
 void Player::updatePlayerDir()
 {
         // PPA3 input processing logic          
-        if (mainGameMechsRef->getInput() != 0) {
-            switch(mainGameMechsRef->getInput()) {
+        if (mainGameMechsRef->getInput() != 0) { // Only run if an input has been given
+            switch(mainGameMechsRef->getInput()) { // Check the input
                 case 'w':
-                    if (myDir != DOWN) {
+                    if (myDir != DOWN) { // Each direction change only happens if the opposite direction is not the current direction
                         myDir = UP;
                     }
                     break;
@@ -77,25 +71,26 @@ void Player::updatePlayerDir()
                     }
                     break;
             }
-            mainGameMechsRef->clearInput();
+            mainGameMechsRef->clearInput(); // Clear input to ensure new input can be excepted
         }
 }
 
 void Player::movePlayer()
 {
     // PPA3 Finite State Machine logic
-    objPos temp;
+    objPos temp; // temporary position object to eventually instantiate an array list element with
     switch(myDir) {
         case UP:
+            // Create a new position that has the same coordinates as the current head of the list, except one space higher in the y direction
             temp.setObjPos(playerPosList->getHeadElement().pos->x, playerPosList->getHeadElement().pos->y - 1, playerPosList->getHeadElement().getSymbol());
-            if (temp.pos->y == 0) {
+            if (temp.pos->y == 0) { // Wrap around condition to change the y positioning if needed
                 temp.pos->y = mainGameMechsRef->getBoardSizeY() - 2;
 
             }
-            playerPosList->insertHead(temp);
-            playerPosList->removeTail();
+            playerPosList->insertHead(temp); // Make the temporary position the current head once the temporary position has the correct move instrucstions
+            playerPosList->removeTail(); // Remove the last element to simulate movement
             break;
-        case DOWN:
+        case DOWN: // The rest of the directions work the same as up
             temp.setObjPos(playerPosList->getHeadElement().pos->x, playerPosList->getHeadElement().pos->y + 1, playerPosList->getHeadElement().getSymbol());
             if (temp.pos->y == mainGameMechsRef->getBoardSizeY() - 1) {
                 temp.pos->y = 1;
@@ -121,15 +116,16 @@ void Player::movePlayer()
             break;
     }
 
-    for (int i = 0; i < playerPosList->getSize(); i++) {
-        for (int j = i + 1; j < playerPosList->getSize(); j++) {
-            const objPos& pos1 = playerPosList->getElement(i).getObjPos();
+// Checking for collision with itself
+    for (int i = 0; i < playerPosList->getSize(); i++) { // Loop through each body segment
+        for (int j = i + 1; j < playerPosList->getSize(); j++) { // Loop through each body segment, starting one index higher than the outer loop to allow coordinate comparison
+            const objPos& pos1 = playerPosList->getElement(i).getObjPos(); // current positions of the two indexes about to be compared
             const objPos& pos2 = playerPosList->getElement(j).getObjPos();
-            if (pos1.isPosEqual(&pos2)) {
-                mainGameMechsRef->setLoseMessage(1);
-                mainGameMechsRef->setLoseFlag();
+            if (pos1.isPosEqual(&pos2)) { // Check if the two positions are the same
+                mainGameMechsRef->setLoseMessage(1); // Choose the collision with yourself error message
+                mainGameMechsRef->setLoseFlag(); 
                 mainGameMechsRef->setExitTrue();
-                return;
+                return; // No need to loop through the rest of the indexes if a collision is detected
             }
         }
     }
