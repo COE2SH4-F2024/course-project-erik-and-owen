@@ -6,7 +6,18 @@ Player::Player(GameMechs* thisGMRef)
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
 
-    playerPos.setObjPos(5, 3, '*');
+    // playerPos.setObjPos(5, 3, '*');
+    objPos head = {5, 3, '*'};
+    objPos middle = {5, 4, '*'};
+    objPos middle2 = {5, 5, '*'};
+    objPos middle3 = {5, 6, '*'};
+    objPos tail = {5, 7, '*'};
+    playerPosList = new objPosArrayList();
+    playerPosList->insertHead(head);
+    playerPosList->insertTail(middle);
+    playerPosList->insertTail(middle2);
+    playerPosList->insertTail(middle3);
+    playerPosList->insertTail(tail);
 
     // more actions to be included
 }
@@ -18,12 +29,20 @@ Player::~Player()
     if (mainGameMechsRef) {
         delete mainGameMechsRef;
     }
+
+    if (playerPosList) {
+        delete playerPosList;
+    }
 }
 
-objPos Player::getPlayerPos() const
-{
+// objPos Player::getPlayerPos() const
+// {
     // return the reference to the playerPos arrray list
-    return playerPos;
+    // return playerPos;
+// }
+
+objPosArrayList* Player::getPlayerPos() const {
+    return playerPosList;
 }
 
 void Player::updatePlayerDir()
@@ -59,30 +78,40 @@ void Player::updatePlayerDir()
 void Player::movePlayer()
 {
     // PPA3 Finite State Machine logic
+    objPos temp;
     switch(myDir) {
         case UP:
-            playerPos.pos->y--;
-            if (playerPos.pos->y == 0) {
-                playerPos.pos->y = mainGameMechsRef->getBoardSizeY() - 2;
+            temp.setObjPos(playerPosList->getHeadElement().pos->x, playerPosList->getHeadElement().pos->y - 1, playerPosList->getHeadElement().getSymbol());
+            if (temp.pos->y == 0) {
+                temp.pos->y = mainGameMechsRef->getBoardSizeY() - 2;
+
             }
+            playerPosList->insertHead(temp);
+            playerPosList->removeTail();
             break;
         case DOWN:
-            playerPos.pos->y++;
-            if (playerPos.pos->y == mainGameMechsRef->getBoardSizeY() - 1) {
-                playerPos.pos->y = 1;
+            temp.setObjPos(playerPosList->getHeadElement().pos->x, playerPosList->getHeadElement().pos->y + 1, playerPosList->getHeadElement().getSymbol());
+            if (temp.pos->y == mainGameMechsRef->getBoardSizeY() - 1) {
+                temp.pos->y = 1;
             }
+            playerPosList->insertHead(temp);
+            playerPosList->removeTail();
             break;
         case RIGHT:
-            playerPos.pos->x++;
-            if (playerPos.pos->x == mainGameMechsRef->getBoardSizeX() - 1) {
-                playerPos.pos->x = 1;
+            temp.setObjPos(playerPosList->getHeadElement().pos->x + 1, playerPosList->getHeadElement().pos->y, playerPosList->getHeadElement().getSymbol());
+            if (temp.pos->x == mainGameMechsRef->getBoardSizeX() - 1) {
+                temp.pos->x = 1;
             }
+            playerPosList->insertHead(temp);
+            playerPosList->removeTail();
             break;
         case LEFT:
-            playerPos.pos->x--;
-            if (playerPos.pos->x == 0) {
-                playerPos.pos->x = mainGameMechsRef->getBoardSizeX() - 2;
+            temp.setObjPos(playerPosList->getHeadElement().pos->x - 1, playerPosList->getHeadElement().pos->y, playerPosList->getHeadElement().getSymbol());
+            if (temp.pos->x == 0) {
+                temp.pos->x = mainGameMechsRef->getBoardSizeX() - 2;
             }
+            playerPosList->insertHead(temp);
+            playerPosList->removeTail();
             break;
     }
 }

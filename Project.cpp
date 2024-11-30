@@ -95,10 +95,14 @@ void DrawScreen(void)
         for (int j = 0; j < gameMechs->getBoardSizeX(); j++) {
             if (i == 0 || i == gameMechs->getBoardSizeY() - 1 || j == 0 || j == gameMechs->getBoardSizeX() - 1) {
                 gameMechs->getBoard()[i][j] = '#';
-            } else if (i == player->getPlayerPos().pos->y && j == player->getPlayerPos().pos->x) {
-                gameMechs->getBoard()[i][j] = player->getPlayerPos().symbol;
             } else {
                 gameMechs->getBoard()[i][j] = ' ';
+            }
+
+            for (int k = 0; k < player->getPlayerPos()->getSize(); k++) {
+                if(i == player->getPlayerPos()->getElement(k).pos->y && j == player->getPlayerPos()->getElement(k).pos->x) {
+                    gameMechs->getBoard()[i][j] = player->getPlayerPos()->getElement(k).symbol;
+                }
             }
 
             MacUILib_printf("%c", gameMechs->getBoard()[i][j]);
