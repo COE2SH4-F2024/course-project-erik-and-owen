@@ -104,7 +104,7 @@ void GameMechs::setLoseMessage(int messageNum) {
 
     switch (messageNum) {
         case 1:
-            message = "Message 1";
+            message = "You collided with yourself, you lose";
             break;
         case 2:
             message = "Message 2";
