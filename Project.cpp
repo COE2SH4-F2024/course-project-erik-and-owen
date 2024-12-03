@@ -3,6 +3,7 @@
 #include "objPos.h"
 #include "GameMechs.h"
 #include "Player.h"
+#include "Food.h"
 
 using namespace std;
 
@@ -10,6 +11,7 @@ using namespace std;
 
 GameMechs *gameMechs;
 Player *player;
+Food *food;
 
 void Initialize(void);
 void GetInput(void);
@@ -45,6 +47,7 @@ void Initialize(void)
 
     gameMechs = new GameMechs(30, 15); // Instantiate with board dimensions
     player = new Player(gameMechs);
+    food = new Food();
 
     gameMechs->createBoard(); // Function that creates the board on the heap
 }
@@ -79,6 +82,9 @@ void RunLogic(void)
                 gameMechs->setLoseFlag();
                 gameMechs->setLoseMessage(3);
                 break;
+            case 'f':
+                food->generateFood(player->getPlayerPos()->getHeadElement(), gameMechs->getBoardSizeX(), gameMechs->getBoardSizeY());
+                break;
         }
     }
 
@@ -104,6 +110,10 @@ void DrawScreen(void)
                 }
             }
 
+            if (i == food->getFood()->pos->y && j == food->getFood()->pos->x) {
+                gameMechs->getBoard()[i][j] = food->getSymbol();
+            }
+
             MacUILib_printf("%c", gameMechs->getBoard()[i][j]); // Print whatever the symbol determined above is
         }
 
@@ -125,6 +135,8 @@ void LoopDelay(void)
 void CleanUp(void)
 {
     // MacUILib_clearScreen();    
-
     MacUILib_uninit();
+    delete player;
+    delete gameMechs;
+    delete food;
 }
