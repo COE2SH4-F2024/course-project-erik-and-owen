@@ -7,24 +7,9 @@ Player::Player(GameMechs* thisGMRef, Food* thisFoodRef)
     mainFoodRef = thisFoodRef;
     myDir = STOP;
 
-    // playerPos.setObjPos(5, 3, '*');
     objPos head = {5, 3, '*'};
-    // objPos middle = {5, 4, '*'};
-    // objPos middle2 = {5, 5, '*'};
-    // objPos middle3 = {5, 6, '*'};
-    // objPos middle4 = {5, 7, '*'};
-    // objPos middle5 = {5, 8, '*'};
-    // objPos middle6 = {5, 9, '*'};
-    // objPos tail = {5, 10, '*'};
     playerPosList = new objPosArrayList();
     playerPosList->insertHead(head);
-    // playerPosList->insertTail(middle);
-    // playerPosList->insertTail(middle2);
-    // playerPosList->insertTail(middle3);
-    // playerPosList->insertTail(middle4);
-    // playerPosList->insertTail(middle5);
-    // playerPosList->insertTail(middle6);
-    // playerPosList->insertTail(tail);
 
     // more actions to be included
 }
