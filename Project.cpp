@@ -46,10 +46,11 @@ void Initialize(void)
     MacUILib_clearScreen();
 
     gameMechs = new GameMechs(30, 15); // Instantiate with board dimensions
-    player = new Player(gameMechs);
     food = new Food();
+    player = new Player(gameMechs, food);
 
     gameMechs->createBoard(); // Function that creates the board on the heap
+    food->generateFood(player->getPlayerPos()->getHeadElement(), gameMechs->getBoardSizeX(), gameMechs->getBoardSizeY()); // Random starting position for the food
 }
 
 void GetInput(void)
