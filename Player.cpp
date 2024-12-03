@@ -115,7 +115,7 @@ void Player::movePlayer()
 
     if (checkFoodConsumption()) {
         playerPosList->insertHead(temp); // Make the temporary position the current head once the temporary position has the correct move instrucstions
-        mainFoodRef->generateFood(playerPosList->getHeadElement(), mainGameMechsRef->getBoardSizeX(), mainGameMechsRef->getBoardSizeY());
+        mainFoodRef->generateFood(*playerPosList, mainGameMechsRef->getBoardSizeX(), mainGameMechsRef->getBoardSizeY());
     } else {
         if (myDir != STOP) {
             playerPosList->insertHead(temp); // Make the temporary position the current head once the temporary position has the correct move instrucstions

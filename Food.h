@@ -2,6 +2,7 @@
 #define FOOD_H
 
 #include "objPos.h"
+#include "objPosArrayList.h"
 
 class Food {
     private:
@@ -12,7 +13,7 @@ class Food {
         Food();
         ~Food();
 
-        void generateFood(objPos blockOff, const int xRange, const int yRange);
+        void generateFood(const objPosArrayList &blockOff, const int xRange, const int yRange);
         objPos* getFood() const;
         char getSymbol() const;
 };

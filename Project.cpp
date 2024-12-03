@@ -50,7 +50,7 @@ void Initialize(void)
     player = new Player(gameMechs, food);
 
     gameMechs->createBoard(); // Function that creates the board on the heap
-    food->generateFood(player->getPlayerPos()->getHeadElement(), gameMechs->getBoardSizeX(), gameMechs->getBoardSizeY()); // Random starting position for the food
+    food->generateFood(*player->getPlayerPos(), gameMechs->getBoardSizeX(), gameMechs->getBoardSizeY()); // Random starting position for the food
 }
 
 void GetInput(void)
@@ -84,7 +84,7 @@ void RunLogic(void)
                 gameMechs->setLoseMessage(3);
                 break;
             case 'f':
-                food->generateFood(player->getPlayerPos()->getHeadElement(), gameMechs->getBoardSizeX(), gameMechs->getBoardSizeY());
+                food->generateFood(*player->getPlayerPos(), gameMechs->getBoardSizeX(), gameMechs->getBoardSizeY());
                 break;
         }
     }

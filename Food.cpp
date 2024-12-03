@@ -17,15 +17,18 @@ Food::~Food() {
     }
 }
 
-void Food::generateFood(objPos blockOff, const int xRange, const int yRange) {
+void Food::generateFood(const objPosArrayList &blockOff, const int xRange, const int yRange) {
         int candidateX, candidateY;
 
-        do {
-            candidateX = rand() % (xRange - 2) + 1;
-            candidateY = rand() % (yRange - 2) + 1;
-        } while (candidateX == blockOff.pos->x && candidateY == blockOff.pos->y);
+        for (int i = 0; i < blockOff.getSize(); i++) {
+            do {
+                candidateX = rand() % (xRange - 2) + 1;
+                candidateY = rand() % (yRange - 2) + 1;
+            } while (candidateX == blockOff.getElement(i).pos->x && candidateY == blockOff.getElement(i).pos->y);
+        }
 
-        foodPos->setObjPos(candidateX, candidateY, blockOff.getSymbol());
+
+        foodPos->setObjPos(candidateX, candidateY, blockOff.getHeadElement().getSymbol());
 }
 
 objPos* Food::getFood() const {
