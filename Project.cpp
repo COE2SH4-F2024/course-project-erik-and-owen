@@ -63,28 +63,10 @@ void GetInput(void)
 
 void RunLogic(void)
 {
-    if (gameMechs->getInput() != 0) { // Debugging buttons
+    if (gameMechs->getInput() != 0) { 
         switch(gameMechs->getInput()) {
             case ' ':
                 gameMechs->setExitTrue();
-                break;
-            case 'l':
-                gameMechs->incrementScore();
-                break;
-            case '1':
-                gameMechs->setLoseFlag();
-                gameMechs->setLoseMessage(1);
-                break;
-            case '2':
-                gameMechs->setLoseFlag();
-                gameMechs->setLoseMessage(2);
-                break;
-            case '3':
-                gameMechs->setLoseFlag();
-                gameMechs->setLoseMessage(3);
-                break;
-            case 'f':
-                food->generateFood(*player->getPlayerPos(), gameMechs->getBoardSizeX(), gameMechs->getBoardSizeY());
                 break;
         }
     }

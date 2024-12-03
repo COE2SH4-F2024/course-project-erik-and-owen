@@ -100,21 +100,6 @@ char** GameMechs::getBoard() {
     return board;
 }
 
-void GameMechs::setLoseMessage(int messageNum) { // Pass an integer corresponding to the desired message
-
-    switch (messageNum) {
-        case 1:
-            message = "You collided with yourself, you lose";
-            break;
-        case 2:
-            message = "Message 2";
-            break;
-        case 3:
-            message = "Message 3";
-            break;
-    }
-}
-
 string GameMechs::getLoseMessage() {
-    return message; // Message stores whichever string the user set the message to with setLoseMessage()
+    return "You collided with yourself, you lose"; 
 }

@@ -131,7 +131,6 @@ void Player::movePlayer()
             const objPos& pos1 = playerPosList->getElement(i).getObjPos(); // current positions of the two indexes about to be compared
             const objPos& pos2 = playerPosList->getElement(j).getObjPos();
             if (pos1.isPosEqual(&pos2)) { // Check if the two positions are the same
-                mainGameMechsRef->setLoseMessage(1); // Choose the collision with yourself error message
                 mainGameMechsRef->setLoseFlag(); 
                 mainGameMechsRef->setExitTrue();
                 return; // No need to loop through the rest of the indexes if a collision is detected

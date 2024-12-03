@@ -22,8 +22,6 @@ class GameMechs
         int boardSizeX;
         int boardSizeY;
 
-        string message;
-
         objPos food;
 
     public:
@@ -49,7 +47,6 @@ class GameMechs
         // More methods should be added here
         void createBoard();
         char** getBoard();
-        void setLoseMessage(int messageNum);
         string getLoseMessage();
 };
 
